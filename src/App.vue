@@ -1,4 +1,4 @@
-<template>
+<template style="background: black">
   <v-app>
       <router-view></router-view>
   </v-app>

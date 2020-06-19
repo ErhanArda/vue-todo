@@ -3,6 +3,7 @@ import Router  from 'vue-router';
 import Login from '../components/Auth/Login'
 import Todo from '../components/Todo'
 import Signup from '../components/Auth/Signup'
+import Tasks from '../components/Tasks.vue'
 
 Vue.use(Router);
 
@@ -23,6 +24,11 @@ export default new Router ({
         path: '/signup',
         name: 'Signup',
         component: Signup,
+    },
+    {
+        path: '/tasks',
+        name: 'Tasks',
+        component: Tasks,
     },
 ],   
 
