@@ -3,10 +3,11 @@
     <v-container fluid fill-height pl-0 r-0 pb-0 pt-0>
         <v-layout row align-space-between justify-space-between>
             <v-flex lg3 pr-2>
-                <Lists />
+                <Lists user-id="123" />
             </v-flex>
 
         <v-flex lg6 pr-2 pl-2>
+            <v-btn to="/login" dark color='primary'>back to login</v-btn>
             <v-btn @click="seen=false" v-if="seen" dark color="green">
                 Tasks
             </v-btn>
@@ -17,6 +18,7 @@
                 Tasks
             </v-btn>
         </v-flex>
+
 
         <v-flex lg3 pr-2>Options</v-flex>
         </v-layout>

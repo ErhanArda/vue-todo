@@ -1,61 +1,83 @@
 <template>
-        <div>
-                <v-btn to="/" dark color='primary'>back to home</v-btn>
+    <div>
+        <nav class="nav-wrapper">
+            <div class="logo">
+                Logo
+            </div>
+            <div class="flex">
+                <div v-for="item in nav" :key="item">
+                    <a 
+                        :href="item.link" 
+                        class="link-item" 
+                        :class="[(item.subLinkModal) ? 'link-active': '']"
+                        @click="toggleSubModal(item)">
+                        {{ item.title }}
+                    </a>
 
-            <!-- <v-card>
-                <input v-model="fullName" style="border:1px black solid">
-                <v-card-text>
-                    <v-text>The current firstName value is : {{firstName}}</v-text>
-                        <v-spacer></v-spacer>
-                    <v-text>The current lastName value is : {{lastName}}</v-text>
-                </v-card-text>
-            </v-card> -->
+                    <template v-if="item.subLinks && item.subLinkModal">
+                        <div class="sublinks">
+                            <a v-for="subLink in item.subLinks" :key="subLink" :href="subLink.link" class="link-item">{{ subLink.title }}</a>
+                        </div>
+                    </template>
+                </div>
+            </div>
+
+            
+        </nav>
+        <div>
+            Learn Vue
+            <div>
+            <v-btn to="/" dark color='primary'>back to home</v-btn>
 
             <p>the current value is {{ message }}</p>
             <v-btn @click="modified">Click</v-btn>
 
-            <v-list>
-                <v-list-item v-for="list in lists" :key="list">
-                    {{list.title}} - {{list.tasks}}
-                </v-list-item>
-            </v-list>
             
             <!-- :title="message" shows message on hover  -->
                 <v-text :title="message">{{ message + ' is ' + exclamation}}</v-text>
                     <v-spacer></v-spacer>
                     <input v-model="message" style="border:1px black solid">
             <v-btn v-on:click="reverseMessage" color="warning">Reverse Message</v-btn>
+                    <v-list>
+                    <input v-model="item" style="border:1px black solid">
+        
+                    <v-btn @click.prevent="addItem">
+                        add
+                    </v-btn>
+                <v-list-item v-for="item in items" :key="item" >
+                    {{item}}
+                </v-list-item>
+            </v-list>
+            <v-text :style="myStyles">text</v-text>
+
         </div>
+        </div>
+    </div>
+        
 </template>
 
 <script>
+
 export default {
     name:'Tasks',
     data:()=>({
+        myStyles: {color: 'rebeccapurple',fontSize: 50 + 'px'},
         message:'Vue.js',
         fun: 'fun',
-        firstName:'',
-        lastName:'',
-        lists:[
-            { 
-                id:1,
-                title:"List",
-                tasks:3
-            },
-            { 
-                id:1,
-                title:"List",
-                tasks:7
-            }, { 
-                id:1,
-                title:"List",
-                tasks:13
-            },
-            { 
-                id:1,
-                title:"List",
-                tasks:56
-            },            
+        item:'',
+        items:[],
+        nav:[
+            {title:'Home',link:'#home'},
+            {title:'About',link:'#about', subLinks:[
+                {title:'Audio',link:'#audio'},
+                {title:'Video',link:'#video'},
+                {title:'Web',link:'#web'}
+            ],  subLinkModal:false},
+            {title:'Services',link:'#services', subLinks:[
+                {title:'Audio',link:'#audio'},
+                {title:'Video',link:'#video'},
+                {title:'Web',link:'#web'}
+            ],  subLinkModal:false}
         ]
     }),
     methods: {
@@ -64,23 +86,25 @@ export default {
         },
         modified: function () {
             this.message += '!'
+        },
+        addItem: function(){
+            this.items.push(this.item),
+            this.item=''
+        },
+        toggleSubModal: function (item) {
+            if(item.subLinks){
+                item.subLinkModal = !item.subLinkModal
+            }
         }
     },
     computed: {
         exclamation: function() {
             return this.fun + '!'
         },
-        // fullName:{
-        //     get: function () {
-        //         return this.firstName + ' ' + this.lastName
-        //     },
-        //     set: function(newValue){
-        //         var names = newValue.split(' ')
-
-        //         this.firstName= names[0]
-        //         this.lastName = names[1]
-        //     }   
-        // }
     }
 }
 </script>
+
+<style scoped>
+@import './Tasks.css'
+</style>

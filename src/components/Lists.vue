@@ -8,16 +8,25 @@
                 </v-btn> -->
                 <v-icon>mdi-magnify</v-icon>
             </v-toolbar>
-
+            
             <v-list>
                 <v-list-item>
                     <v-list-item-content >
-                        Create a new list
+                        <!-- <input v-model="item" style="border:2px black solid"> -->
+                        <v-text-field
+                                name="add item"
+                                label="add item"
+                                type="text"
+                                v-model="item"
+                                ></v-text-field>
                     </v-list-item-content>
 
                     <v-list-item-action>
                         <v-list-item-title>
-                            <v-icon>mdi-plus</v-icon>
+                            <v-btn v-if="item.length>0" @click.prevent="addItem" color="blue" dark>
+                                add
+                                <v-icon small>mdi-plus</v-icon>
+                            </v-btn>
                         </v-list-item-title>
                     </v-list-item-action>
                 </v-list-item>
@@ -26,22 +35,20 @@
             <v-divider></v-divider>
             <v-list style="height:100%">
                 <v-list-item
-                    v-for="(list,key) in lists"
+                    v-for="(item,key) in items"
                     :key="key"
                 >
                     <v-list-item-content>
                         <v-list-item-title>
-                            {{list.title}}
+                            {{item}}
                         </v-list-item-title>
                     </v-list-item-content>
-
-                    <v-list-item-action>
-                        <v-list-item-title>
-                            {{list.tasks}}
-                        </v-list-item-title>
-                    </v-list-item-action>
+                    <v-btn @click="removeItem" color="blue" dark>
+                                rem<v-icon small>mdi-minus</v-icon>
+                            </v-btn>
                 </v-list-item>
             </v-list>
+
             
         </v-navigation-drawer>
 </template>
@@ -49,93 +56,21 @@
 <script>
 export default {
     name:"lists",
+
     data:()=>({
-        lists:[
-            { 
-                id:1,
-                title:"List",
-                tasks:3
-            },
-            { 
-                id:1,
-                title:"List",
-                tasks:7
-            }, { 
-                id:1,
-                title:"List",
-                tasks:13
-            },
-            { 
-                id:1,
-                title:"List",
-                tasks:56
-            }, { 
-                id:1,
-                title:"List",
-                tasks:3
-            },
-            { 
-                id:1,
-                title:"List",
-                tasks:7
-            }, { 
-                id:1,
-                title:"List",
-                tasks:13
-            },
-            { 
-                id:1,
-                title:"List",
-                tasks:56
-            }, { 
-                id:1,
-                title:"List",
-                tasks:3
-            },
-            { 
-                id:1,
-                title:"List",
-                tasks:7
-            }, { 
-                id:1,
-                title:"List",
-                tasks:13
-            },
-            { 
-                id:1,
-                title:"List",
-                tasks:56
-            },
-            { 
-                id:1,
-                title:"List",
-                tasks:7
-            }, { 
-                id:1,
-                title:"List",
-                tasks:13
-            },
-            { 
-                id:1,
-                title:"List",
-                tasks:56
-            },
-            { 
-                id:1,
-                title:"List",
-                tasks:7
-            }, { 
-                id:1,
-                title:"List",
-                tasks:13
-            },
-            { 
-                id:1,
-                title:"List",
-                tasks:56
-            },
-            
-        ]
-    })
+        item:'',
+        items:[]
+    }),
+    methods: {
+        addItem: function () {
+            this.items.push(this.item),
+            this.item=''
+        },
+        removeItem: function(key) {
+            this.items.splice(key,1)
+               // this.items = this.items.filter(item => !item)
+
+        }
+    }
 }
 </script>
